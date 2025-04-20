@@ -1,0 +1,39 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python data_prep.py \ --input hyundi.csv \ --output hyundi_processed.csv
+    deps:
+    - path: data_prep.py
+      hash: md5
+      md5: 0d25f60e445898ccb9777b060455e627
+      size: 630
+    - path: hyundi.csv
+      hash: md5
+      md5: fab5751bbc94643b976f1957c05991a0
+      size: 245355
+    outs:
+    - path: hyundi_processed.csv
+      hash: md5
+      md5: 94b90812f94fa19ec60c021e5ef52d17
+      size: 253340
+  train:
+    cmd: python model_training_evaluation.py
+    deps:
+    - path: hyundi_processed.csv
+      hash: md5
+      md5: 94b90812f94fa19ec60c021e5ef52d17
+      size: 253340
+    - path: model_training_evaluation.py
+      hash: md5
+      md5: a7237a7d33e1f2fb3512f3439caeeaf3
+      size: 1349
+    outs:
+    - path: ag_model_dir
+      hash: md5
+      md5: 1502171ce64017310340f7c9b7bf9d5b.dir
+      size: 523230252
+      nfiles: 223
+    - path: metrics.json
+      hash: md5
+      md5: 3d96d43c0a3e9fd7613beb49a4e334a3
+      size: 115

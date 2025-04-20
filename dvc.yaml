@@ -1,0 +1,20 @@
+stages:
+  prepare:
+    cmd: python data_prep.py \
+      --input hyundi.csv \
+      --output hyundi_processed.csv
+    deps:
+      - hyundi.csv            # raw dataset
+      - data_prep.py          # data preparation script
+    outs:
+      - hyundi_processed.csv  # cleaned data for training
+
+  train:
+    cmd: python model_training_evaluation.py
+    deps:
+      - hyundi_processed.csv       # cleaned data from prepare
+      - model_training_evaluation.py
+    outs:
+      - ag_model_dir               # AutoGluon’s saved model directory
+    metrics:
+      - metrics.json               # JSON file with MAE, MSE, RMSE, R2
